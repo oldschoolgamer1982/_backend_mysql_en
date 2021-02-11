@@ -1,5 +1,5 @@
 const Sequel = require('sequelize')
-const sequelize = new Sequel(<host>, <username>, <password>, {
+const sequelize = new Sequel(<table>, <username>, <password>, {
     host: 'localhost',
     dialect: 'mysql'
 })
