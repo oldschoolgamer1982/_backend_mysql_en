@@ -1,0 +1,21 @@
+extends layout
+block body
+    h2 Color testing
+    ul
+        each color in colors
+            li
+                small
+                    label Nome: 
+                    spam= color.color
+                    br
+                    label Hex: 
+                    spam= color.hex
+                    spam  - 
+                    label RGB: 
+                    spam= color.rgb
+                    br
+    hr
+    <a href="/color/add"><button>ADD COLOR</button></a>
+    head
+        style
+            include ../layouts/leftarea.css

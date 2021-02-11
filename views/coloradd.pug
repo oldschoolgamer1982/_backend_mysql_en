@@ -1,0 +1,20 @@
+extends layout
+block body
+    <form action="add" method="POST">
+    h2 Color testing
+    label(for="color") Color:
+    br
+    input(type="text" name="color" id="color" placeholder="CSS NAME" size="50" required)
+    br
+    label(for="rgb") RGB:
+    br
+    input(type="text" name="rgb" id="rgb" placeholder="RGB VALUE" size="50" required)
+    label(for="hex") Hex:
+    br
+    input(type="text" name="hex" id="hex" placeholder="HEX VALUE" size="50" required)
+    hr
+    button(type="submit" class="btn") ADD COLOR
+    </form>
+    head
+        style
+            include ../layouts/leftarea.css

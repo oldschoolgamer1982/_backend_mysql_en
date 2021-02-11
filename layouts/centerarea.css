@@ -1,0 +1,11 @@
+div#area {
+    width: 400px;
+    height: 440px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.616);
+    text-align: center;
+    margin: auto;
+    margin-top: 10px;
+    padding: 5px;
+    font: normal 30pt Arial;
+    color: white;
+}

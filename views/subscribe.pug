@@ -1,0 +1,30 @@
+extends layout
+block body
+     if err
+          ul
+               each error in err
+                    small= error.msg
+                    br
+     h2 Create new account
+     <form action="subscribe" method="POST">
+     label(for="name") Name:
+     br
+     input(type="text" name="name" id="name" placeholder="Name Lastname" size="50" required)
+     br 
+     label(for="email") Email:
+     br
+     input(type="email" name="email" id="email" placeholder="user@mail.com" size="50" required)
+     br
+     label(for="password") Password (8 or more characters):
+     br
+     input(type="password" name="password" id="password" placeholder="Password (min 8 characters)" size="50" required)
+     br
+     label(for="password2") Confirm password:
+     br
+     input(type="password" name="password2" id="password2" placeholder="Confirm your password" size="50" required)
+     hr
+     button(type="submit" class="btn") Creat account
+     </form>
+     head
+          style
+               include ../layouts/leftarea.css

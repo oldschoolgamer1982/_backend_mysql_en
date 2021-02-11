@@ -1,0 +1,15 @@
+extends layout
+block body
+    h2 New post
+    label(for="title") Title:
+    br
+    input(type="text" name="title" id="title" placeholder="Post Title" size="50" required)
+    br
+    label(for="post") Post:
+    br
+    textarea(name="post" id="post" cols="53" rows="15" placeholder="Enter text" required)
+    hr
+    <a href="/post/add"><button>Creat Post</button></a>
+    head
+        style
+            include ../layouts/leftarea.css

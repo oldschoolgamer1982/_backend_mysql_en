@@ -1,0 +1,30 @@
+header {
+    background-color: black;
+    color: white;
+}
+body {background-color: white;
+    color: black;
+    font: normal 15pt Arial;
+}
+button {
+    background-color: black;
+    color: white;
+    height: 5%;
+}
+div#body {
+    background-color: rgb(185, 185, 185);
+    width: 95%;
+    height: 80%;
+    border-radius: 20px;
+    margin: auto;
+    margin-top: 30px;
+    padding: 5px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.616);
+}
+footer {
+    background-color: black;
+    color: white;
+    font: normal 10pt Arial;
+    text-align: center;
+    margin-top: 3%;
+}
