@@ -1,9 +1,10 @@
 extends layout
 block body
+    <form action="login" method="POST">
     h2 Sign In
-    label(for="name") Name:
+    label(for="email") Email:
     br
-    input(type="text" name="name" id="name" placeholder="Name Lastname" size="50" required)
+    input(type="email" name="email" id="email" placeholder="user@mail.com" size="50" required)
     br 
     label(for="password") Password:
     br
@@ -11,7 +12,7 @@ block body
     br
     hr
     button(type="submit" class="btn") SIGN IN
-    br
+    </form>
     h3 Not user yet? Creat account
     <a href="/subscribe"><button>Creat account</button></a>
     head

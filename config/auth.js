@@ -1,25 +1,25 @@
 const localStrategy = require('passport-local')
-const sequelize = require('sequelize')
 const db = require('../config/db')
 const bcrypt = require('bcrypt')
-
-
 require('../models/User')
 const User =  db.sequelize.define('users')
 
 
+
 module.exports = function(passport) {
     passport.use(new localStrategy({usernameField: 'email', passwordField: 'password'}, (email, password, done)=>{
-        User.findOne({email:email}).then((user)=>{
+        User.findOne({where: {email:email}, attributes: ['id', 'email', 'password']}).then((user)=>{
             if (!user){
                 return done(null, false, {message: 'User account does not exist!'})
-            }
-            bcrypt.compare(password, user.password, (err, match)=>{
+            } 
+            bcrypt.compare(password, user.dataValues.password, (err, match)=>{
+                console.log(password, user.dataValues.password)
                 if(match){
                     return done(null, user)
-                } else{
+                } else {
                     return done(null, false, {message: 'Invalid password!'})
                 }
+            
             })
         })
     }))
@@ -29,7 +29,7 @@ module.exports = function(passport) {
     })
 
     passport.deserializeUser((id, done)=>{
-        User.findById(id, (err, user)=>{
+        User.findByPk(id).then((user, err)=>{
             done(err, user)
         })
     })

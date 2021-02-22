@@ -8,9 +8,12 @@ html(lang="en")
     body 
         header
             <a href="/"><button>Home</button></a>
-            <a href="/login"><button>Login</button></a>
-            <a href="/post"><button>Posts</button></a>
-            <a href="/color"><button>Colors</button></a>
+            if user
+                <a href="/post"><button>Posts</button></a>
+                <a href="/color"><button>Colors</button></a>
+                <a href="/logout"><button>Logout</button></a>
+            else 
+                <a href="/login"><button>Login</button></a>
         <div id='body'>
         <div id='area'>
            block body

@@ -9,16 +9,23 @@ const passport = require('passport')
 require('./config/auth')(passport)
 
 app.use(session({
-    secret: 'password',
+    secret: 'session',
     resave: true,
     saveUnitialized: true
 }))
 app.use(passport.initialize())
 app.use(passport.session())
+app.use((req,res,next)=>{
+    // res.locals.success_msg = console.log('success_msg')
+    // res.locals.error_msg = console.log('error_msg')
+    // res.locals.error = console.log('error')
+    res.locals.user = req.user || null
+    next()
+})
 
-app.set('view engine', 'pug')
 app.use(bodyparser.urlencoded({extended: false}))
 app.use(bodyparser.json())
+app.set('view engine', 'pug')
 
 app.get('/', (req,res)=>{
     res.render('home')
@@ -28,11 +35,24 @@ app.get('/login', (req,res)=>{
     res.render('login')
 })
 
+app.post('/login', (req,res,next)=>{
+    passport.authenticate('local',{
+        successRedirect:'/post', 
+        failureRedirect:'/login',
+        failureFlash: false
+    })(req,res,next)
+})
+
+app.get('/logout', (req,res)=>{
+    req.logout()
+    res.redirect('/')
+})
+
 app.get('/subscribe', (req,res)=>{
     res.render('subscribe')
 })
 
-app.post('/subscribe', function(req,res){
+app.post('/subscribe', (req,res)=>{
     var err = []
     if(!req.body.name || typeof req.body.name == undefined || req.body.name ==  null){
         err.push({msg: 'Enter a valid name!'})
