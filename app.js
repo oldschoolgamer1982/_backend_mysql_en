@@ -10,8 +10,9 @@ require('./config/auth')(passport)
 
 app.use(session({
     secret: 'session',
-    resave: true,
-    saveUnitialized: true
+    resave: false,
+    saveUnitialized: false,
+    cookie: { maxAge: 30 * 60 * 1000}
 }))
 app.use(passport.initialize())
 app.use(passport.session())
