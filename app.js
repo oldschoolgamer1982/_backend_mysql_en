@@ -29,8 +29,19 @@ app.use(bodyparser.urlencoded({extended: false}))
 app.use(bodyparser.json())
 app.set('view engine', 'pug')
 
+function isLoggedIn(req,res,next) {
+    if(req.isAuthenticated()){
+        return next()
+    }
+    res.redirect('/404')
+}
+
 app.get('/', (req,res)=>{
     res.render('home')
+})
+
+app.get('/404', (req,res)=>{
+    res.send('Error 404: page not found!')
 })
 
 app.get('/login', (req,res)=>{
@@ -97,14 +108,14 @@ app.post('/subscribe', (req,res)=>{
     }
 })
 
-app.get('/post', (req, res)=>{
+app.get('/post', isLoggedIn, (req, res)=>{
     user = userID
     Post.findAll({where: {user:user}}).then((posts)=>{
         res.render('post', {posts:posts})
     })
 })
 
-app.get('/post/add', (req,res)=>{
+app.get('/post/add', isLoggedIn, (req,res)=>{
    res.render('postadd')
 })
 
