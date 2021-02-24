@@ -3,6 +3,7 @@ const app = express()
 const bodyparser = require('body-parser')
 const Color = require('./models/Color')
 const User = require('./models/User')
+const Post = require('./models/Post')
 const session = require('express-session')
 const bcrypt = require('bcrypt')
 const passport = require('passport')
@@ -96,13 +97,23 @@ app.post('/subscribe', (req,res)=>{
 })
 
 app.get('/post', (req, res)=>{
-    res.render('post')
+    user = userID
+    Post.findAll({where: {user:user}}).then((posts)=>{
+        res.render('post', {posts:posts})
+    })
 })
-  
+
+app.get('/post/add', (req,res)=>{
+    Post.create({
+        title: req.body.title,
+        content: req.body.content,
+        user: req.body.user
+    })
+})
+
 app.get('/color', (req, res)=>{
     Color.findAll({order: [['color', 'ASC']]}).then(function(colors){
-        res.render('color'
-        , {colors: colors})}            
+        res.render('color', {colors: colors})}            
     )
 })
 
@@ -114,7 +125,7 @@ app.post('/color/add', function (req,res){
     Color.create({ 
         color: req.body.color,
         rgb: req.body.rgb,
-        hex: req.body.hex, 
+        hex: req.body.hex
     }).then(()=>{
         res.redirect('/color')
     }).catch((err)=>{
