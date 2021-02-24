@@ -24,7 +24,8 @@ module.exports = function(passport) {
     }))
 
     passport.serializeUser((user, done)=>{
-        done(null, user.id)
+        userID = user.id
+        done(null, user.id, userID)
     })
 
     passport.deserializeUser((id, done)=>{

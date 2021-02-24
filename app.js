@@ -47,6 +47,7 @@ app.post('/login', (req,res,next)=>{
 
 app.get('/logout', (req,res)=>{
     req.logout()
+    userID = undefined
     res.redirect('/')
 })
 
@@ -104,10 +105,19 @@ app.get('/post', (req, res)=>{
 })
 
 app.get('/post/add', (req,res)=>{
+   res.render('postadd')
+})
+
+
+app.post('/post/add', (req,res)=>{
     Post.create({
         title: req.body.title,
         content: req.body.content,
-        user: req.body.user
+        user: userID
+    }).then(()=>{
+        res.redirect('/post')
+    }).catch((err)=>{
+        res.send('Error! ' + err)
     })
 })
 
