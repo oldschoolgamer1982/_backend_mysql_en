@@ -1,10 +1,5 @@
 extends layout
 block body
-     if err
-          ul
-               each error in err
-                    small= error.msg
-                    br
      h2 Create new account
      <form action="subscribe" method="POST">
      label(for="name") Name:

@@ -21,6 +21,15 @@ div#body {
     padding: 5px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.616);
 }
+div#errors {
+    background-color: peachpuff;
+    border-radius: 20px;
+    text-align: center;
+    margin-top: 10px;
+    padding: 1px;
+    font: normal 15pt Arial;
+    color: red;
+}
 footer {
     background-color: black;
     color: white;

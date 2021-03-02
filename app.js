@@ -18,9 +18,6 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 app.use((req,res,next)=>{
-    // res.locals.success_msg = console.log('success_msg')
-    // res.locals.error_msg = console.log('error_msg')
-    // res.locals.error = console.log('error')
     res.locals.user = req.user || null
     next()
 })
@@ -33,7 +30,8 @@ function isLoggedIn(req,res,next) {
     if(req.isAuthenticated()){
         return next()
     }
-    res.redirect('/404')
+    var err = [{msg: 'Please, sign in before entering this area.'}]
+    res.render('home', {err: err})
 }
 
 app.get('/', (req,res)=>{
@@ -48,12 +46,20 @@ app.get('/login', (req,res)=>{
     res.render('login')
 })
 
-app.post('/login', (req,res,next)=>{
-    passport.authenticate('local',{
-        successRedirect:'/post', 
-        failureRedirect:'/login',
-        failureFlash: false
-    })(req,res,next)
+app.post('/login', function(req, res, next) {
+    passport.authenticate('local', function(err, user, info) {
+      if (err) { 
+        return next(err)}
+        if (!user) {
+            var err = []
+            err.push(info)
+            return res.render('login', {err: err})} 
+      req.logIn(user, function(err) {
+        if (err) { 
+            return next(err)}
+        return res.redirect('/post');
+      });
+    })(req, res, next);
 })
 
 app.get('/logout', (req,res)=>{
@@ -86,7 +92,6 @@ app.post('/subscribe', (req,res)=>{
 
     if (err.length > 0){
         res.render('subscribe', {err: err})
-        console.log(err)
     } else {
         bcrypt.genSalt(10, (err, salt)=>{
             User.password = req.body.password

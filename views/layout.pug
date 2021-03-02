@@ -5,7 +5,7 @@ html(lang="en")
         title PostIt
         style
             include ../layouts/main.css
-    body 
+    body
         header
             <a href="/"><button>Home</button></a>
             if user
@@ -15,6 +15,13 @@ html(lang="en")
             else 
                 <a href="/login"><button>Login</button></a>
         <div id='body'>
+            if err
+                <div id='errors'>
+                        ul
+                            each error in err
+                                p 
+                                    small= error.msg
+                </div>
         <div id='area'>
            block body
         </div>
