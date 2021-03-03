@@ -57,9 +57,9 @@ app.post('/login', function(req, res, next) {
       req.logIn(user, function(err) {
         if (err) { 
             return next(err)}
-        return res.redirect('/post');
-      });
-    })(req, res, next);
+        return res.redirect('/post')
+      })
+    })(req, res, next)
 })
 
 app.get('/logout', (req,res)=>{
@@ -114,8 +114,13 @@ app.post('/subscribe', (req,res)=>{
                             name: req.body.name,
                             email: req.body.email,
                             password: hash
-                        }).then(()=>{
-                            res.redirect('/login')
+                        }).then((user)=>{
+                            req.login(user, (err)=>{
+                                if (err) {
+                                    res.send('Error! ' + err)
+                                }
+                                res.redirect('/post')
+                            })
                         }).catch((err)=>{
                             res.send('Error! ' + err)
                         })
