@@ -73,53 +73,55 @@ app.get('/subscribe', (req,res)=>{
 })
 
 app.post('/subscribe', (req,res)=>{
-    var err = []
 
-    if(!req.body.name || typeof req.body.name == undefined || req.body.name ==  null){
-        err.push({msg: 'Enter a valid name!'})
-    }
-
-    if(!req.body.email || typeof req.body.email == undefined || req.body.email ==  null){
-        err.push({msg: 'Enter a valid e-mail address!'})
-    } 
-
-    if(!req.body.password || typeof req.body.password == undefined || req.body.password ==  null){
-        err.push({msg: 'Enter a valid password!'})
-    }
-
-    if(req.body.password.length < 8 && req.body.password.length > 0){
-        err.push({msg: 'The password must contain at least 8 characters!'})
-    }
-
-    if(req.body.password != req.body.password2){
-        err.push({msg: 'Password does not match, try again!'})
-    }
-    
-    
     User.findOne({where:{email:req.body.email}}).then((isUser)=>{
         if (isUser){
-            err.push({msg: 'Email address is already registered!'})
-            res.render('subscribe', {err: err})
-        } else if (err.length > 0){
-            res.render('subscribe', {err: err})
+            var err = [{msg: 'Email address is already registered!'}]
+            res.render('login', {err: err})
         } else {
-            bcrypt.genSalt(10, (err, salt)=>{
-                User.password = req.body.password
-                bcrypt.hash(User.password, salt, (err, hash)=>{
-                    if (err){
-                        res.send('Error! ' + err)
-                    }
-                    User.create({
-                        name: req.body.name,
-                        email: req.body.email,
-                        password: hash
-                    }).then(()=>{
-                        res.redirect('/login')
-                    }).catch((err)=>{
-                        res.send('Error! ' + err)
+            var err = []
+
+            if(!req.body.name || typeof req.body.name == undefined || req.body.name ==  null){
+                err.push({msg: 'Enter a valid name!'})
+            }
+
+            if(!req.body.email || typeof req.body.email == undefined || req.body.email ==  null){
+                err.push({msg: 'Enter a valid e-mail address!'})
+            } 
+
+            if(!req.body.password || typeof req.body.password == undefined || req.body.password ==  null){
+                err.push({msg: 'Enter a valid password!'})
+            }
+
+            if(req.body.password.length < 8 && req.body.password.length > 0){
+                err.push({msg: 'The password must contain at least 8 characters!'})
+            }
+
+            if(req.body.password != req.body.password2){
+                err.push({msg: 'Password does not match, try again!'})
+            }
+        
+            if (err.length > 0){
+                res.render('subscribe', {err: err})
+            } else {
+                bcrypt.genSalt(10, (err, salt)=>{
+                    User.password = req.body.password
+                    bcrypt.hash(User.password, salt, (err, hash)=>{
+                        if (err){
+                            res.send('Error! ' + err)
+                        }
+                        User.create({
+                            name: req.body.name,
+                            email: req.body.email,
+                            password: hash
+                        }).then(()=>{
+                            res.redirect('/login')
+                        }).catch((err)=>{
+                            res.send('Error! ' + err)
+                        })
                     })
                 })
-            })
+            }
         }
     })
 })
