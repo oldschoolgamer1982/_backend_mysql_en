@@ -1,14 +1,18 @@
 extends layout
+
 block body
     h2 New post
         ul
             each post in posts
-                li
-                    small
-                        label Post: 
-                        spam= post.title
+                <a onclick="abrirPost(#{user},#{post.id})">
+                    spam= post.title
+                </a>
     hr
+
     <a href="/post/add"><button>Create Post</button></a>
     head
         style
             include ../layouts/leftarea.css
+block scripts
+    script.
+        function abrirPost(user, id){window.location.href = `/post/${user}/${id}`}

@@ -6,6 +6,4 @@ const Post = db.sequelize.define('posts', {
     user: {type: db.Sequel.INTEGER}
 })
 
-// Post.sync({force: true})
-
 module.exports = Post

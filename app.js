@@ -134,7 +134,7 @@ app.post('/subscribe', (req,res)=>{
 app.get('/post', isLoggedIn, (req, res)=>{
     user = userID
     Post.findAll({where: {user:user}}).then((posts)=>{
-        res.render('post', {posts:posts})
+        res.render('post', {posts:posts, user:user})
     })
 })
 
@@ -146,13 +146,32 @@ app.get('/post/add', isLoggedIn, (req,res)=>{
 app.post('/post/add', (req,res)=>{
     Post.create({
         title: req.body.title,
-        content: req.body.content,
+        content: req.body.post,
         user: userID
     }).then(()=>{
         res.redirect('/post')
     }).catch((err)=>{
         res.send('Error! ' + err)
     })
+})
+
+app.get('/post/:userid/:id', isLoggedIn, (req,res)=>{
+    if (req.params.userid == userID) {
+        Post.findOne({where: {id: req.params.id}}).then((post)=>{
+            if(post){
+                console.log(post)
+                res.render('openpost', {post: post})
+            }else{
+                var err = [{msg: 'Path/File acess error!'}]
+                res.render('/post', {err: err} )
+            }
+        }).catch((err)=>{
+            res.send('Error! ' + err)
+        })
+    } else {
+        var err = [{msg: 'Path/File acess error!'}]
+        res.render('home', {err: err})
+    }
 })
 
 app.get('/color', (req, res)=>{
