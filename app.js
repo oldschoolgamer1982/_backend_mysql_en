@@ -159,7 +159,6 @@ app.get('/post/:userid/:id', isLoggedIn, (req,res)=>{
     if (req.params.userid == userID) {
         Post.findOne({where: {id: req.params.id}}).then((post)=>{
             if(post){
-                console.log(post)
                 res.render('openpost', {post: post})
             }else{
                 var err = [{msg: 'Path/File acess error!'}]
