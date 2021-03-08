@@ -155,14 +155,70 @@ app.post('/post/add', (req,res)=>{
     })
 })
 
+app.get('/post/edit/:id', isLoggedIn, (req,res)=>{
+    Post.findOne({where: {id: req.params.id}}).then((post)=>{
+        if(post){
+            if (post.user == userID) {
+                res.render('editpost', {post: post})
+            } else {
+                var err = [{msg: 'Path/File acess error!'}]
+                res.render('home', {err: err} )
+            }
+        } else {
+            var err = [{msg: 'Path/File acess error!'}]
+            res.render('home', {err: err} )
+        }
+    }).catch((err)=>{
+        res.send('Error! ' + err)
+    })
+})
+
+app.post('/post/edit/', (req,res)=>{
+    Post.findOne({where: {id:req.body.postid}}).then((post)=>{
+        if(post){
+            console.log(post.user, userID)
+            post.title = req.body.title,
+            post.content =  req.body.post,
+            post.save().then(()=>{
+                res.redirect('/post')
+            })
+        } else {
+            var err = [{msg: 'Path/File acess error!'}]
+            res.render('home', {err: err} )
+        } 
+    }).catch((err)=>{
+        res.send('Error! ' + err)
+    })
+})
+
+app.get('/post/delete/:id', isLoggedIn, (req,res)=>{
+    Post.findOne({where: {id:req.params.id}}).then((post)=>{
+        if(post){
+            if (post.user == userID) {
+                post.destroy().then(function(){
+                    res.redirect('/post')
+                })
+            } else {
+                var err = [{msg: 'Path/File acess error!'}]
+                res.render('home', {err: err} )
+            }
+        } else {
+            var err = [{msg: 'Path/File acess error!'}]
+            res.render('home', {err: err} )
+        }
+    }).catch((err)=>{
+        res.send('Error! ' + err)
+    })
+})
+
 app.get('/post/:userid/:id', isLoggedIn, (req,res)=>{
     if (req.params.userid == userID) {
         Post.findOne({where: {id: req.params.id}}).then((post)=>{
             if(post){
                 res.render('openpost', {post: post})
-            }else{
+            } else {
                 var err = [{msg: 'Path/File acess error!'}]
-                res.render('/post', {err: err} )
+                res.render('home', {err: err} )
             }
         }).catch((err)=>{
             res.send('Error! ' + err)
@@ -171,14 +227,6 @@ app.get('/post/:userid/:id', isLoggedIn, (req,res)=>{
         var err = [{msg: 'Path/File acess error!'}]
         res.render('home', {err: err})
     }
-})
-
-app.get('/post/edit/:id', (req,res)=>{
-    res.render('home')
-})
-
-app.get('/post/delte/:id', (req,res)=>{
-    res.render('home')
 })
 
 app.get('/color', (req, res)=>{
