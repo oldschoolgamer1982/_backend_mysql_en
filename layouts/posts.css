@@ -1,0 +1,49 @@
+div#area2 {
+    width: 400px;
+    height: 440px;
+    text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.616);
+    text-align: center;
+    margin: auto;
+    margin-top: 10px;
+    padding: 5px;
+    font: normal 30pt Arial;
+    color: white;
+}
+
+div#area {
+    width: 400px;
+    height: 440px;
+    /* line-height: 50px; */
+    margin: auto;
+    margin-top: 10px;
+    padding: 5px;
+}
+
+div#titlebox {
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.616);
+}
+
+div#postbox {
+    background-color: white;
+    height: 350px;
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.616);
+}
+
+div#date {
+    font: normal 10pt sans-serif;
+    margin-left: 5pt;
+}
+
+div#title {
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.616);
+    margin-left: 5pt;
+}
+
+div#content {
+    margin: 10pt;
+    text-align: justify;
+    font-size: 12pt;
+}

@@ -1,5 +1,21 @@
 extends layout
 block body
-    h1=post.title
-    h3=post.content
-    small=post.createdAt
+    <div id='postbox'>
+        <div id='date'>
+            small=post.createdAt
+        </div>
+        <div id='title'>
+            spam= post.title
+        </div>
+        br
+        <div id='content'>
+            spam= post.content
+        </div>
+    </div>
+    <a href="/post/edit/#{id}"><button>Edit</button></a>
+    <a href="/post/delete/#{id}"><button>Delete</button></a>
+    hr
+    <a href="/post"><button>< Posts</button></a>
+    head
+        style
+            include ../layouts/posts.css

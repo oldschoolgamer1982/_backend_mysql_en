@@ -173,6 +173,14 @@ app.get('/post/:userid/:id', isLoggedIn, (req,res)=>{
     }
 })
 
+app.get('/post/edit/:id', (req,res)=>{
+    res.render('home')
+})
+
+app.get('/post/delte/:id', (req,res)=>{
+    res.render('home')
+})
+
 app.get('/color', (req, res)=>{
     Color.findAll({order: [['color', 'ASC']]}).then(function(colors){
         res.render('color', {colors: colors})}            

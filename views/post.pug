@@ -1,18 +1,24 @@
 extends layout
 
 block body
-    h2 New post
-        ul
-            each post in posts
-                <a onclick="abrirPost(#{user},#{post.id})">
+    h2 Posts
+    each post in posts
+        p 
+            <div id='titlebox' onclick="abrirPost(#{user},#{post.id})">
+                <div id='date'>
+                    small=post.createdAt
+                </div>
+                <div id='title'>
                     spam= post.title
-                </a>
+                </div>
+            </div>
     hr
 
     <a href="/post/add"><button>Create Post</button></a>
     head
         style
-            include ../layouts/leftarea.css
+            include ../layouts/posts.css
 block scripts
     script.
         function abrirPost(user, id){window.location.href = `/post/${user}/${id}`}
+
