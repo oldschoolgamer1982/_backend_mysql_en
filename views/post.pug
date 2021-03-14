@@ -1,17 +1,18 @@
 extends layout
-
 block body
-    h2 Posts
-    each post in posts
-        p 
-            <div id='titlebox' onclick="abrirPost(#{user},#{post.id})">
-                <div id='date'>
-                    small=post.createdAt
+    if posts.length > 0
+        each post in posts
+            p 
+                <div id='titlebox' onclick="abrirPost(#{user},#{post.id})">
+                    <div id='date'>
+                        small=post.createdAt
+                    </div>
+                    <div id='title'>
+                        spam= post.title
+                    </div>
                 </div>
-                <div id='title'>
-                    spam= post.title
-                </div>
-            </div>
+    else 
+        h2 No posts found
     hr
 
     <a href="/post/add"><button>Create Post</button></a>
