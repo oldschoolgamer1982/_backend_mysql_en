@@ -176,7 +176,6 @@ app.get('/post/edit/:id', isLoggedIn, (req,res)=>{
 app.post('/post/edit/', (req,res)=>{
     Post.findOne({where: {id:req.body.postid}}).then((post)=>{
         if(post){
-            console.log(post.user, userID)
             post.title = req.body.title,
             post.content =  req.body.post,
             post.save().then(()=>{
@@ -195,9 +194,9 @@ app.get('/post/delete/:id', isLoggedIn, (req,res)=>{
     Post.findOne({where: {id:req.params.id}}).then((post)=>{
         if(post){
             if (post.user == userID) {
-                post.destroy().then(function(){
-                    res.redirect('/post')
-                })
+                confirmedFunction = 'deletePost'
+                functionParams =  req.params.id
+                res.render('confirm', {confirmedFunction:confirmedFunction, functionParams:functionParams})  
             } else {
                 var err = [{msg: 'Path/File acess error!'}]
                 res.render('home', {err: err} )
@@ -209,6 +208,30 @@ app.get('/post/delete/:id', isLoggedIn, (req,res)=>{
     }).catch((err)=>{
         res.send('Error! ' + err)
     })
+})
+
+app.post('/confirm', (req,res)=>{
+    isConfirmed = req.body.confirmed
+    thisFunction = req.body.function
+    thisParams = req.body.params
+    if (isConfirmed == 'false') {
+        confirmed = false
+    } else {
+        confirmed = true
+    }
+    if (thisFunction == 'deletePost') {
+        Post.findOne({where: {id:thisParams}}).then((post)=>{
+            if (confirmed) {
+                post.destroy().then(function(){
+                    res.redirect('/post')
+                })
+            }else {
+                res.redirect(`/post/${post.user}/${post.id}`)
+            }
+        }).catch((err)=>{
+            res.send('Error! ' + err)
+        })  
+    }
 })
 
 app.get('/post/:userid/:id', isLoggedIn, (req,res)=>{

@@ -1,0 +1,20 @@
+extends layout
+block body
+    <form name= "confirm" action="/confirm" method="POST">
+        <body id="alert" onload="confirmMsg()">
+        input(type="hidden" name="confirmed" id="confirmed")
+        input(type="hidden" name="function" id="function" value=confirmedFunction)
+        input(type="hidden" name="params" id="params" value=functionParams)
+    </form>
+block scripts
+    script.
+        function confirmMsg(){
+            var askConfirm = window.confirm('Are u sure?')
+            var confirmed = window.document.getElementById('confirmed')
+            confirmed.value = askConfirm
+            if (confirmed) {
+                document.forms["confirm"].submit()
+            } else {
+                document.forms["confirm"].submit()
+            }       
+        }
