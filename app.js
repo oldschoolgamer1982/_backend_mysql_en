@@ -63,9 +63,7 @@ app.post('/login', function(req, res, next) {
 })
 
 app.get('/logout', (req,res)=>{
-    req.logout()
-    userID = undefined
-    res.redirect('/')
+    res.render('confirm', {confirmedFunction: 'signOut', functionParams:req.headers.referer})  
 })
 
 app.get('/subscribe', (req,res)=>{
@@ -194,9 +192,7 @@ app.get('/post/delete/:id', isLoggedIn, (req,res)=>{
     Post.findOne({where: {id:req.params.id}}).then((post)=>{
         if(post){
             if (post.user == userID) {
-                confirmedFunction = 'deletePost'
-                functionParams =  req.params.id
-                res.render('confirm', {confirmedFunction:confirmedFunction, functionParams:functionParams})  
+                res.render('confirm', {confirmedFunction:'deletePost', functionParams:req.params.id})  
             } else {
                 var err = [{msg: 'Path/File acess error!'}]
                 res.render('home', {err: err} )
@@ -231,6 +227,14 @@ app.post('/confirm', (req,res)=>{
         }).catch((err)=>{
             res.send('Error! ' + err)
         })  
+    }
+    if (thisFunction == 'signOut') {
+        if (confirmed) {
+            req.logout()
+            res.redirect('/')
+        } else {
+            res.redirect(thisParams)
+        }
     }
 })
 
