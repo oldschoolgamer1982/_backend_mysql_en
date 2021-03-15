@@ -8,6 +8,7 @@ const session = require('express-session')
 const bcrypt = require('bcrypt')
 const passport = require('passport')
 require('./config/auth')(passport)
+const {isLoggedIn} =require('./helpers/isLoggedIn')
 
 app.use(session({
     secret: 'session',
@@ -22,17 +23,11 @@ app.use((req,res,next)=>{
     next()
 })
 
+
 app.use(bodyparser.urlencoded({extended: false}))
 app.use(bodyparser.json())
 app.set('view engine', 'pug')
 
-function isLoggedIn(req,res,next) {
-    if(req.isAuthenticated()){
-        return next()
-    }
-    var err = [{msg: 'Please, sign in before entering this area.'}]
-    res.render('home', {err: err})
-}
 
 app.get('/', (req,res)=>{
     res.render('home')
