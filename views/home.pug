@@ -1,6 +1,13 @@
 extends layout
 block body
-     h1 Welcome
+     if user
+          h1 Welcome #{userName}
+     else
+          h1 Welcome 
+          small Create digital stickers accessible from anywhere!
+          hr
+          br
+          <a href="/subscribe"><button>Click here to register a new account!</button></a>
      head
           style
                include ../layouts/centerarea.css
