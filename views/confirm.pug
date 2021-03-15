@@ -5,11 +5,13 @@ block body
         input(type="hidden" name="confirmed" id="confirmed")
         input(type="hidden" name="function" id="function" value=confirmedFunction)
         input(type="hidden" name="params" id="params" value=functionParams)
+        input(type="hidden" name="msg" id="msg" value=confirmText)
     </form>
 block scripts
     script.
         function confirmMsg(){
-            var askConfirm = window.confirm('Are u sure?')
+            var confirmText = window.document.getElementById('msg')
+            var askConfirm = window.confirm(confirmText.value)
             var confirmed = window.document.getElementById('confirmed')
             confirmed.value = askConfirm
             if (confirmed) {
