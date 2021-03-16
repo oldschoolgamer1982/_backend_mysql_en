@@ -10,7 +10,8 @@ html(lang="en")
             <a href="/"><button>Home</button></a>
             if user
                 <a href="/post"><button>Posts</button></a>
-                <a href="/color"><button>Colors</button></a>
+                if admin
+                    <a href="/color"><button>Colors</button></a>
                 <a href="/logout"><button>Logout</button></a>
             else 
                 <a href="/login"><button>Login</button></a>

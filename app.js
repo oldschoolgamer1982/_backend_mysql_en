@@ -8,7 +8,8 @@ const session = require('express-session')
 const bcrypt = require('bcrypt')
 const passport = require('passport')
 require('./config/auth')(passport)
-const {isLoggedIn} =require('./helpers/isLoggedIn')
+const {isLoggedIn} = require('./helpers/isLoggedIn')
+const{isAdmin} = require('./helpers/isAdmin')
 
 app.use(session({
     secret: 'session',
@@ -251,13 +252,13 @@ app.get('/post/:userid/:id', isLoggedIn, (req,res)=>{
     }
 })
 
-app.get('/color', (req, res)=>{
+app.get('/color', isLoggedIn, isAdmin, (req, res)=>{
     Color.findAll({order: [['color', 'ASC']]}).then(function(colors){
         res.render('color', {colors: colors})}            
     )
 })
 
-app.get('/color/add', (req,res)=>{
+app.get('/color/add', isLoggedIn, isAdmin, (req,res)=>{
     res.render('coloradd')
 })
 

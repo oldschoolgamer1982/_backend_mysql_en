@@ -8,7 +8,7 @@ const User =  db.sequelize.define('users')
 
 module.exports = function(passport) {
     passport.use(new localStrategy({usernameField: 'email', passwordField: 'password'}, (email, password, done)=>{
-        User.findOne({where: {email:email}, attributes: ['id', 'email', 'password','name']}).then((user)=>{
+        User.findOne({where: {email:email}, attributes: ['id', 'email', 'password','name','isAdmin']}).then((user)=>{
             if (!user){
                 return done(null, false, {msg: 'User account does not exist!'})
             } 
@@ -26,7 +26,12 @@ module.exports = function(passport) {
     passport.serializeUser((user, done)=>{
         userID = user.id
         userName = user.dataValues.name.split(' ')[0]
-        done(null, user.id, userID, userName)
+        if (user.dataValues.isAdmin == 1){
+            admin = true
+        } else {
+            admin = false
+        }
+        done(null, user.id, userID, userName, admin)
     })
 
     passport.deserializeUser((id, done)=>{
