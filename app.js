@@ -274,6 +274,27 @@ app.post('/color/add', function (req,res){
     })
 })
 
+app.get('/users', isLoggedIn, isAdmin, (req,res)=>{
+    User.findAll().then((users)=>{
+        res.render('users',{users:users})
+    })
+})
+
+app.get('/user/del/:id', isLoggedIn, isAdmin, (req,res)=>{
+    User.findOne({where: {id:req.params.id}}).then((user)=>{
+        if (user){
+            user.destroy().then(function(){
+                res.redirect('/users')
+            })
+        } else {
+            var err = [{msg: 'Path/File acess error!'}]
+            res.render('home', {err: err})
+        }
+    }).catch((err)=>{
+        res.send('Error! ' + err)
+    })
+})
+
 app.listen(1982, function(){
     console.log ('Connecting to URL http://localost:1982')
 })

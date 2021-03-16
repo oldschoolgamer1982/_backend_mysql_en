@@ -1,0 +1,9 @@
+extends layout
+
+block body
+    each user in users 
+        ul
+            spam=user.name 
+            spam=user.email 
+            spam=user.isAdmin 
+            <a href="/user/del/#{user.id}"><button>Del</button></a>
