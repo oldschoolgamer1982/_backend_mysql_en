@@ -9,7 +9,10 @@ const bcrypt = require('bcrypt')
 const passport = require('passport')
 require('./config/auth')(passport)
 const {isLoggedIn} = require('./helpers/isLoggedIn')
-const{isAdmin} = require('./helpers/isAdmin')
+const {isAdmin} = require('./helpers/isAdmin')
+const {delPost} = require('./scripts/delPost')
+const {signOut} = require('./scripts/signOut')
+const {delUser} = require('./scripts/delUser')
 
 app.use(session({
     secret: 'session',
@@ -212,38 +215,13 @@ app.post('/confirm', (req,res)=>{
         confirmed = true
     }
     if (thisFunction == 'deletePost') {
-        Post.findOne({where: {id:thisParams}}).then((post)=>{
-            if (confirmed) {
-                post.destroy().then(function(){
-                    res.redirect('/post')
-                })
-            }else {
-                res.redirect(`/post/${post.user}/${post.id}`)
-            }
-        }).catch((err)=>{
-            res.send('Error! ' + err)
-        })  
+       delPost(req,res)
     }
     if (thisFunction == 'signOut') {
-        if (confirmed) {
-            req.logout()
-            res.redirect('/')
-        } else {
-            res.redirect(thisParams)
-        }
+       signOut(req,res)
     }
     if (thisFunction == 'deleteUser') {
-        User.findOne({where: {id:thisParams}}).then((user)=>{
-            if (confirmed) {
-                user.destroy().then(function(){
-                    res.redirect('/users')
-                })
-            }else {
-                res.redirect(`/users`)
-            }
-        }).catch((err)=>{
-            res.send('Error! ' + err)
-        })  
+        delUser(req,res)
     }
 })
 
