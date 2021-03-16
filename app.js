@@ -188,7 +188,7 @@ app.get('/post/delete/:id', isLoggedIn, (req,res)=>{
     Post.findOne({where: {id:req.params.id}}).then((post)=>{
         if(post){
             if (post.user == userID) {
-                res.render('confirm', {confirmedFunction:'deletePost', functionParams:req.params.id, confirmText: 'Are you sure you want to permanently remove this post?'})  
+                res.render('confirm', {confirmedFunction:'deletePost', functionParams:post.id, confirmText: 'Are you sure you want to permanently remove this post?'})  
             } else {
                 var err = [{msg: 'Path/File acess error!'}]
                 res.render('home', {err: err} )
@@ -231,6 +231,19 @@ app.post('/confirm', (req,res)=>{
         } else {
             res.redirect(thisParams)
         }
+    }
+    if (thisFunction == 'deleteUser') {
+        User.findOne({where: {id:thisParams}}).then((user)=>{
+            if (confirmed) {
+                user.destroy().then(function(){
+                    res.redirect('/users')
+                })
+            }else {
+                res.redirect(`/users`)
+            }
+        }).catch((err)=>{
+            res.send('Error! ' + err)
+        })  
     }
 })
 
@@ -283,9 +296,7 @@ app.get('/users', isLoggedIn, isAdmin, (req,res)=>{
 app.get('/user/del/:id', isLoggedIn, isAdmin, (req,res)=>{
     User.findOne({where: {id:req.params.id}}).then((user)=>{
         if (user){
-            user.destroy().then(function(){
-                res.redirect('/users')
-            })
+            res.render('confirm', {confirmedFunction:'deleteUser', functionParams:user.id, confirmText: 'Are you sure you want to remove this user?'})
         } else {
             var err = [{msg: 'Path/File acess error!'}]
             res.render('home', {err: err})
