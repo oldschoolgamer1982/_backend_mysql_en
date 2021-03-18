@@ -1,9 +1,20 @@
 extends layout
 
 block body
-    each user in users 
-        ul
-            spam=user.name 
-            spam=user.email 
-            spam=user.isAdmin 
-            <a href="/user/del/#{user.id}"><button>Del</button></a>
+    div(id="line")
+        div(id="name") Name
+        div(id="email") Email
+        div(id="admin") Admin
+        div(id="users")
+            each user in users
+                div(id="line")
+                    div(id="name")= user.name
+                    div(id="email")= user.email
+                    if user.isAdmin == 1
+                        div(id="admin")= 'YES' 
+                    else
+                        div(id="admin")= 'NO'
+                    <a href="/user/del/#{user.id}"><button>Del</button></a>
+    head
+        style
+            include ../layouts/users.css

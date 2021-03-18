@@ -1,0 +1,33 @@
+div#area {
+    width: 400px;
+    height: 440px;
+    line-height: 30px;
+    margin: auto;
+    margin-top: 10px;
+    padding: 5px;
+}
+div#line {
+    background-color: white;
+    line-height: 30px;
+    font-size: 12pt;
+    border: 1px solid rgb(0, 0, 0);
+}
+div#name {
+    margin-left: 15px;
+    width: 120px;
+    display: inline-block;
+}
+div#email {
+    width: 150px;
+    text-align: center;
+    display: inline-block;
+}
+div#admin {
+    width: 50px;
+    text-align:center;
+    display: inline-block;
+}
+div#users {
+    max-height: 300px;
+    overflow: auto;
+}
