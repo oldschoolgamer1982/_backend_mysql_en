@@ -144,6 +144,7 @@ app.post('/post/add', (req,res)=>{
     Post.create({
         title: req.body.title,
         content: req.body.post,
+        color: req.body.color,
         user: userID
     }).then(()=>{
         res.redirect('/post')
@@ -175,6 +176,7 @@ app.post('/post/edit/', (req,res)=>{
         if(post){
             post.title = req.body.title,
             post.content =  req.body.post,
+            post.color = req.body.color
             post.save().then(()=>{
                 res.redirect('/post')
             })
