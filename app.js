@@ -32,6 +32,7 @@ app.use(bodyparser.urlencoded({extended: false}))
 app.use(bodyparser.json())
 app.set('view engine', 'pug')
 
+app.use("/scripts", express.static('./scripts/'))
 
 app.get('/', (req,res)=>{
     res.render('home')

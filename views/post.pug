@@ -3,7 +3,7 @@ block body
     if posts.length > 0
         each post in posts
             p 
-                <div id='titlebox' name="post#{post.id}" onclick="abrirPost(#{user},#{post.id})">
+                <div id='titlebox' name="post#{post.id}" onclick="openPost(#{user},#{post.id})">
                     <div id='date'>
                         small=post.createdAt
                     </div>
@@ -22,16 +22,4 @@ block body
         style
             include ../layouts/posts.css
 block scripts
-    script.
-        var allPosts = window.document.getElementsByName('id')
-        for (postID of allPosts){
-            changeColor(postID.value)
-        }
-        function abrirPost(user, id){window.location.href = `/post/${user}/${id}`}
-        function changeColor(idpost){
-                            var titlebox = window.document.getElementsByName(`post${idpost}`)[0]
-                            console.log(titlebox)
-                            var color = window.document.getElementById(`color${idpost}`)
-                            titlebox.style.background= color.value
-                        }
-
+    script(src="/../scripts/postScripts.js") 
