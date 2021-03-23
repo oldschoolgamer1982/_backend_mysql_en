@@ -1,6 +1,6 @@
 extends layout
 block body
-    h2 Color testing
+    h2  Color Management
     ul
         each color in colors
             li
@@ -15,7 +15,7 @@ block body
                     span= color.rgb
                     br
     hr
-    <a href="/color/add"><button>ADD COLOR</button></a>
+    <a href="/color/add"><button>Add New Color</button></a>
     head
         style
             include ../layouts/leftarea.css

@@ -6,15 +6,17 @@ block body
     br
     input(type="text" name="title" id="title" placeholder="Post Title" size="50" required value=post.title)
     br
-    label(for="title") Color:
-    br
-    input(type="text" name="color" id="color" placeholder="Post color" size="50" required value=post.color)
-    br
     label(for="post") Post:
     br
-    textarea(name="post" id="post" cols="53" rows="15" placeholder="Enter text" required)
+    textarea(name="post" id="post" cols="53" rows="13" placeholder="Enter text" required)
         |#{post.content}
     input(type="hidden" name="postid" value=post.id)
+    p
+    select(name="color" id="color")
+        option(value=post.color) #{post.color} (current)
+        each color in colors
+            if color.color != post.color 
+                option= color.color
     hr
     button(type="submit" class="btn") Save
     </form>

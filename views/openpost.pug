@@ -1,5 +1,6 @@
 extends layout
 block body
+    <body id="alert" onload="postColor(#{post.id})">
     <div id='postbox'>
         <div id='date'>
             small=post.createdAt
@@ -13,6 +14,7 @@ block body
         </div>
     </div>
     input(type="hidden" name="postid" value=post.id)
+    input(type="hidden" id="color"+post.id value=post.color)
     <a href="/post/edit/#{post.id}"><button>Edit</button></a>
     <a href="/post/delete/#{post.id}"><button>Delete</button></a>
     hr
@@ -20,3 +22,5 @@ block body
     head
         style
             include ../layouts/posts.css
+block scripts
+    script(src="/../scripts/postScripts.js") 

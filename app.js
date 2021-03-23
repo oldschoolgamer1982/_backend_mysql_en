@@ -137,7 +137,9 @@ app.get('/post', isLoggedIn, (req, res)=>{
 })
 
 app.get('/post/add', isLoggedIn, (req,res)=>{
-   res.render('postadd')
+    Color.findAll({order: [['color', 'ASC']]}).then(function(colors){
+        res.render('postadd', {colors: colors})}            
+    )
 })
 
 
@@ -158,7 +160,9 @@ app.get('/post/edit/:id', isLoggedIn, (req,res)=>{
     Post.findOne({where: {id: req.params.id}}).then((post)=>{
         if(post){
             if (post.user == userID) {
-                res.render('editpost', {post: post})
+                Color.findAll({order: [['color', 'ASC']]}).then(function(colors){
+                    res.render('editpost', {post: post, colors: colors})}            
+                )
             } else {
                 var err = [{msg: 'Path/File acess error!'}]
                 res.render('home', {err: err} )

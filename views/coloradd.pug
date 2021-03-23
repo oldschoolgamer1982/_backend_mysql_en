@@ -1,7 +1,7 @@
 extends layout
 block body
     <form action="add" method="POST">
-    h2 Color testing
+    h2 Add New Color
     label(for="color") Color:
     br
     input(type="text" name="color" id="color" placeholder="CSS NAME" size="50" required)
@@ -13,7 +13,7 @@ block body
     br
     input(type="text" name="hex" id="hex" placeholder="HEX VALUE" size="50" required)
     hr
-    button(type="submit" class="btn") ADD COLOR
+    button(type="submit" class="btn") Add Color
     </form>
     head
         style
