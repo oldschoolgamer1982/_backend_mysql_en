@@ -8,15 +8,4 @@ block body
         input(type="hidden" name="msg" id="msg" value=confirmText)
     </form>
 block scripts
-    script.
-        function confirmMsg(){
-            var confirmText = window.document.getElementById('msg')
-            var askConfirm = window.confirm(confirmText.value)
-            var confirmed = window.document.getElementById('confirmed')
-            confirmed.value = askConfirm
-            if (confirmed) {
-                document.forms["confirm"].submit()
-            } else {
-                document.forms["confirm"].submit()
-            }       
-        }
+    script(src="/../scripts/confirmMsg.js") 
