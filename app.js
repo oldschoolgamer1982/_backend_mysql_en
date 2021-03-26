@@ -13,6 +13,7 @@ const {isAdmin} = require('./helpers/isAdmin')
 const {delPost} = require('./scripts/delPost')
 const {signOut} = require('./scripts/signOut')
 const {delUser} = require('./scripts/delUser')
+const db = require('./config/db')
 
 app.use(session({
     secret: 'session',
@@ -291,6 +292,7 @@ app.get('/user/del/:id', isLoggedIn, isAdmin, (req,res)=>{
     })
 })
 
-app.listen(1982, function(){
-    console.log ('Connecting to URL http://localost:1982')
+const PORT = db.PORT
+app.listen(PORT,()=>{
+    console.log (`Connecting to URL http://localost:${PORT}`)
 })
